@@ -11,12 +11,34 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err){
 	if (err) throw err;
-	promptUser();
+	showItems();
+	
 });
 
 var prodQuantity;
 var prodName;
 var prodPrice;
+
+function showItems(){
+      connection.query("SELECT * FROM products", function(err, res) {
+        for (var i = 0; i < res.length; i++) {
+          console.log(
+          	"\nItem ID: "+
+          	res[i].item_id+
+            "\nProduct name: "+
+ 			res[i].product_name+ 
+ 			"\nDepartment: "+
+ 			res[i].department_name+
+ 			"\nPrice: "+
+ 			res[i].price+
+ 			"\nStock "+
+ 			res[i].stock_quantity+
+ 			"\n-----------------------------"
+ 			);
+        }
+        promptUser();
+      });
+}
 
 function promptUser(){
 	inquirer
